@@ -1,0 +1,67 @@
+﻿@page "/Update"
+
+@using Spotifo.Data.Model
+@using Spotifo.Data.Service
+
+@inject IUsuarioService IUsuarioService
+@inject NavigationManager NavigationManager
+
+
+
+<h1>Actualizar Usuario</h1>
+
+<EditForm Model="@usuario" OnValidSubmit="@UsuarioUpdate">
+    <table>
+        <tr>
+            <td>Código:</td>
+            <td><input type="text" @bind="usuario.ID_usuario" required /></td>
+        </tr>
+        <tr>
+            <td>Nombre:</td>
+            <td><input type="text" @bind="usuario.Nombre_usuario" required /></td>
+        </tr>
+        <tr>
+            <td>Apellido:</td>
+            <td><input type="text" @bind="usuario.Apellido_usuario" required /></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" @bind="usuario.Email" required /></td>
+        </tr>
+        <tr>
+            <td>Contraseña:</td>
+            <td><input type="password" @bind="usuario.Password" required/></td>
+        </tr>
+        <tr>
+            <td>Descripción:</td>
+            <td><input type="text" @bind="usuario.Descripcion" required /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Actualizar" />
+                <input type="button" value="Cancelar" @onclick="@Cancel" />
+            </td>
+        </tr>
+
+    </table>
+
+</EditForm>
+
+
+
+@code {
+
+    Usuario usuario = new Usuario();
+
+    protected async Task UsuarioUpdate()
+    {
+        await IUsuarioService.UsuarioUpdate(usuario);
+
+        NavigationManager.NavigateTo("/");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
